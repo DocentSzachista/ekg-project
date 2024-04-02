@@ -2,6 +2,11 @@
 __pycache__/
 *.py[cod]
 *$py.class
+# matlab files extensions
+*.hea
+*.mat
+# garden repository
+garden/
 
 # C extensions
 *.so
