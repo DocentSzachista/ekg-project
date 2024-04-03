@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import wfdb
+import seaborn as sns
 
 from kivy_garden.matplotlib import FigureCanvasKivyAgg
 
@@ -17,6 +18,7 @@ class ECGPlot(BoxLayout):
         self.orientation = "vertical"
         self.current_index = 0
         self.create_layout()
+        sns.set_style("whitegrid")
 
 # Sekcja z layout'em ------------------------------------------------------------------
 
