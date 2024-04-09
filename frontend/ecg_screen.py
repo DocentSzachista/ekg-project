@@ -98,7 +98,7 @@ class ECGPlot(BoxLayout):
         self.axis.cla()
         chosen_plot = self.data[self.current_index]
         self.axis.plot(chosen_plot[::self.sampling_rate])
-        self.axis.set_ylabel("Woltarz")
+        self.axis.set_ylabel("Woltaż")
         self.axis.set_xlabel("Czas [s]")
         self.axis.set_title(self.plot_titles[self.current_index])
         self.fig.canvas.draw()
