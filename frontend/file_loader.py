@@ -33,15 +33,15 @@ class FileLoaderScreen(Screen):
 
         self.bind(size=self._update_rect, pos=self._update_rect)
 
-        self.layout = Button(text='Open File Dialog', size_hint=(
-            0.5, 0.2), pos_hint={'center_x': 0.5, 'center_y': 0.6})
+        self.layout = Button(text='Wybierz plik EKG do analizy', size_hint=(
+            0.5, 0.2), pos_hint={'center_x': 0.5, 'center_y': 0.5})
         self.layout.bind(on_press=self.open_file_dialog)
         self.add_widget(self.layout)
 
         self.app_info = Button(text='App Information', size_hint=(
             0.5, 0.1), pos_hint={'center_x': 0.5, 'center_y': 0.4})
         self.app_info.bind(on_press=self.show_info)
-        self.add_widget(self.app_info)
+        # self.add_widget(self.app_info)
 
     def _update_rect(self, instance, value):
         self.rect.pos = self.pos
@@ -51,7 +51,7 @@ class FileLoaderScreen(Screen):
         self.manager.current = 'ECG'
 
     def open_file_dialog(self, instance):
-        file_chooser = FileChooserListView(path="/home")
+        file_chooser = FileChooserListView(path="./ekg_path")
         # Definiujemy filtry dla rozszerzeń
         file_chooser.filters = ['*.hea', '*.mat', "*.dat"]
         file_chooser.bind(on_submit=self.selected)

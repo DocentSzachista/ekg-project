@@ -1,7 +1,9 @@
+from kivy.logger import LOG_LEVELS, Logger
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from ecg_screen import ECGPlot
 from file_loader import FileLoaderScreen
+from os import makedirs
 
 class ECGScreen(Screen):
 
@@ -28,4 +30,6 @@ class MyApp(App):
         return sm
 
 if __name__ == '__main__':
+    Logger.setLevel(LOG_LEVELS["debug"])
+    makedirs("./ekg_path", exist_ok=True)
     MyApp().run()
