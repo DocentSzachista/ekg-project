@@ -179,7 +179,7 @@ class ECGPlot(BoxLayout):
         self.axis.plot(chosen_plot)
         self.axis.set_ylabel("Woltaż [mV]")
         self.axis.set_xlabel("Czas [s]")
-        self.axis.set_title(self.plot_titles[self.current_index])
+        self.axis.set_title(f"Kanał: {self.plot_titles[self.current_index]}")
         ticks = (
             range(0, len(chosen_plot) + 1, self.sampling_rate), 
             [str(t) + 's' for t in range(0, int(len(chosen_plot) // self.sampling_rate) + 1)]
