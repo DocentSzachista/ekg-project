@@ -3,7 +3,8 @@ import wfdb
 import seaborn as sns
 from kivy.logger import Logger
 from kivy_garden.matplotlib import FigureCanvasKivyAgg
-
+from kivy.clock import Clock
+from kivymd.uix.button import MDFloatingActionButton
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
 from utils import CustomButton, WidgetContainer
@@ -42,6 +43,7 @@ class ECGPlot(BoxLayout):
             self.plot_step = 1
         self.plot_x_min = 0
         self.sampling_rate = 500
+        self.is_running = False
 
         super(ECGPlot, self).__init__(**kwargs)
         self.orientation = "vertical"
@@ -58,15 +60,17 @@ class ECGPlot(BoxLayout):
 
         # Przyciski
         next_button = Button(text='Przesuń do przodu', size_hint=(1, 1))
+        self.play_button = Button(text='Odtwórz', size_hint=(1,1))
         prev_button = Button(text='Przesuń do tyłu', size_hint=(1, 1))
 
         # Bindowanie do funkcji
         next_button.bind(on_press=self.move_right)
         prev_button.bind(on_press=self.move_left)
-
+        self.play_button.bind(on_press=self.handle_playback)
         # Dodawanie przycisków do układu
         
         self.button_layout.add_widget(prev_button)
+        self.button_layout.add_widget(self.play_button)
         self.button_layout.add_widget(next_button)
 
 
@@ -167,6 +171,24 @@ class ECGPlot(BoxLayout):
         current_xlim = self.axis.get_xlim()
         current_end = int(current_xlim[1])
         new_end = min(len(self.data[:, self.current_index]), current_end + self.plot_step*self.sampling_rate)  # Przesunięcie o 10 jednostek w prawo
+        new_start = new_end - (current_xlim[1] - current_xlim[0])
+        self.axis.set_xlim(new_start, new_end)
+        self.fig.canvas.draw()
+
+    def handle_playback(self, instance):
+        if self.is_running:
+            self.update_event.cancel()
+            self.play_button.text = "Odtwórz"
+        else: 
+            self.update_event = Clock.schedule_interval(self.playback_plot, 0.1)
+            self.play_button.text = "Zatrzymaj"
+        self.is_running = not self.is_running
+
+
+    def playback_plot(self, instance):
+        current_xlim = self.axis.get_xlim()
+        current_end = int(current_xlim[1])
+        new_end = min(len(self.data[:, self.current_index]), current_end + 0.01*self.sampling_rate)  # Przesunięcie o 10 jednostek w prawo
         new_start = new_end - (current_xlim[1] - current_xlim[0])
         self.axis.set_xlim(new_start, new_end)
         self.fig.canvas.draw()
