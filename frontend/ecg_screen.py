@@ -4,9 +4,7 @@ import seaborn as sns
 from kivy.logger import Logger
 from kivy_garden.matplotlib import FigureCanvasKivyAgg
 from kivy.clock import Clock
-from kivymd.uix.button import MDFloatingActionButton
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.textinput import TextInput
 from utils import CustomButton, WidgetContainer
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
